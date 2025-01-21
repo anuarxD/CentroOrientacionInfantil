@@ -36,7 +36,6 @@ class Patient extends Model
      */
     protected $fillable = ['usuario_id', 'fecha_nacimiento', 'genero', 'direccion', 'telefono', 'tutor_nombre', 'tutor_relacion', 'tutor_telefono', 'historial_medico', 'alergias'];
 
-    // Definir la relación con el modelo User
     public function user()
     {
         return $this->belongsTo(User::class, 'usuario_id');
