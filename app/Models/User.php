@@ -6,6 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Patient;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class User
  *
@@ -23,7 +25,7 @@ use App\Models\Patient;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable,HasFactory;
 
     protected $perPage = 20;
 
@@ -37,7 +39,7 @@ class User extends Authenticatable
     // Relación con Paciente
     public function patient()
     {
-        return $this->hasOne(Patient::class, 'usuario_id')->onDelete('cascade');;
+        return $this->hasOne(Patient::class, 'usuario_id');
     }
 
     /**
@@ -54,5 +56,11 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    // Valores predeterminados
+    protected $attributes = [
+        'role' => 'Paciente',
+        'status' => 'inactivo',
     ];
 }
