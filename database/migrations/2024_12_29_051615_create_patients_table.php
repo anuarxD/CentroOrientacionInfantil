@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id(); // Llave primaria
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade'); // Establece la relación y la eliminación en cascada
+            $table->unsignedBigInteger('usuario_id');
             $table->date('fecha_nacimiento')->nullable(); // Fecha de nacimiento
             $table->enum('genero', ['Masculino', 'Femenino', 'Otro'])->nullable(); // Género
             $table->string('direccion', 255)->nullable(); // Dirección
@@ -24,6 +24,11 @@ return new class extends Migration
             $table->text('historial_medico')->nullable(); // Historial médico
             $table->text('alergias')->nullable(); // Alergias
             $table->timestamps(); // created_at y updated_at
+
+             $table->foreign('usuario_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
     }
 

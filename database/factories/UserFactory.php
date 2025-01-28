@@ -1,9 +1,8 @@
 <?php
 
 namespace Database\Factories;
-
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -11,6 +10,7 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    protected $model = User::class;
     /**
      * The current password being used by the factory.
      */
@@ -24,12 +24,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'nombre' => $this->faker->firstName,
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('password'), // O usa Hash::make
-            'role' => 'Paciente', // Cambia según el caso
-            'created_at' => now(),
-            'updated_at' => now(),
+            'name' => fake()->firstName(),
+            'email' => fake()->unique()->email(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'role' => 'Paciente',
+            'status' => 'activo', // O cualquier valor adecuado para tu modelo
+            'email_verified_at' => now(),
         ];
     }
 
