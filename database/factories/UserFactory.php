@@ -28,16 +28,9 @@ class UserFactory extends Factory
             'email' => fake()->unique()->email(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'role' => 'Paciente',
-            'status' => 'activo', // O cualquier valor adecuado para tu modelo
+            'status' => 'activo',
             'email_verified_at' => now(),
         ];
-    }
-
-    public function paciente()
-    {
-        return $this->state([
-            'role' => 'Paciente',
-        ]);
     }
     
     /**

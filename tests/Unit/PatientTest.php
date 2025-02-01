@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\Psychologist;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -45,14 +46,23 @@ class PatientTest extends TestCase
     /** @test */
     public function test_a_user_has_one_patient()
     {
-        // Crear un usuario
         $user = User::factory()->create();
 
-        // Crear un paciente asociado al usuario
         $patient = Patient::factory()->create(['usuario_id' => $user->id]);
 
         // Verificar que el usuario tiene un paciente
         $this->assertInstanceOf(Patient::class, $user->patient);
         $this->assertEquals($patient->id, $user->patient->id);
     }
+
+    public function test_a_patient_has_a_psychologist()
+{
+    $psychologist = Psychologist::factory()->create();
+
+    $patient = Patient::factory()->create(['psychologist_id' => $psychologist->id]);
+
+    // Verificar que el paciente tiene un psicólogo asignado
+    $this->assertInstanceOf(Psychologist::class, $patient->psychologist);
+    $this->assertEquals($psychologist->id, $patient->psychologist->id);
+}
 }

@@ -6,8 +6,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Patient;
+use App\Models\Psychologist;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 /**
  * Class User
  *
@@ -25,7 +27,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable,HasFactory;
+    use HasApiTokens, Notifiable, HasFactory;
 
     protected $perPage = 20;
 
@@ -41,6 +43,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Patient::class, 'usuario_id');
     }
+    // Relación con Paciente
+    public function psychologist()
+    {
+        return $this->hasOne(Psychologist::class, 'usuario_id');
+    }
+
+
 
     /**
      * The attributes that should be hidden for serialization.
