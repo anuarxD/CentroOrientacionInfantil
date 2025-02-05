@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id(); // Llave primaria
             $table->unsignedBigInteger('usuario_id');
+
             $table->unsignedBigInteger('psychologist_id')->nullable(); 
             $table->date('fecha_nacimiento')->nullable();
             $table->enum('genero', ['Masculino', 'Femenino', 'Otro'])->nullable();
