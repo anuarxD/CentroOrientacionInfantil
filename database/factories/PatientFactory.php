@@ -14,7 +14,7 @@ class PatientFactory extends Factory
         $relaciones = ['padre', 'madre', 'otro'];
         
         return [
-            'usuario_id' => User::factory(),
+
             'fecha_nacimiento' => now()->subYears(5)->format('Y-m-d'),
             'genero' => $generos[array_rand($generos)],
             'direccion' => fake()->address(), 
@@ -24,6 +24,8 @@ class PatientFactory extends Factory
             'tutor_telefono' => fake()->phoneNumber(),
             'historial_medico' => json_encode(['ninguno']),
             'alergias' => json_encode(['ninguno']),
+            'usuario_id' => User::factory(),
+            'psychologist_id' => null,
         ];
     }
 }

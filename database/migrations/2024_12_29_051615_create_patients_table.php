@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id(); // Llave primaria
             $table->unsignedBigInteger('usuario_id');
-            $table->date('fecha_nacimiento')->nullable(); // Fecha de nacimiento
-            $table->enum('genero', ['Masculino', 'Femenino', 'Otro'])->nullable(); // Género
-            $table->string('direccion', 255)->nullable(); // Dirección
-            $table->string('telefono', 20)->nullable(); // Teléfono
-            $table->string('tutor_nombre', 255)->nullable(); // Nombre del tutor
-            $table->string('tutor_relacion', 50)->nullable(); // Relación del tutor
-            $table->string('tutor_telefono', 20)->nullable(); // Teléfono del tutor
-            $table->text('historial_medico')->nullable(); // Historial médico
-            $table->text('alergias')->nullable(); // Alergias
-            $table->timestamps(); // created_at y updated_at
 
-             $table->foreign('usuario_id')
-                  ->references('id')
-                  ->on('users')
-                  ->onDelete('cascade');
+            $table->unsignedBigInteger('psychologist_id')->nullable(); 
+            $table->date('fecha_nacimiento')->nullable();
+            $table->enum('genero', ['Masculino', 'Femenino', 'Otro'])->nullable();
+            $table->string('direccion', 255)->nullable();
+            $table->string('telefono', 20)->nullable();
+            $table->string('tutor_nombre', 255)->nullable();
+            $table->string('tutor_relacion', 50)->nullable();
+            $table->string('tutor_telefono', 20)->nullable();
+            $table->text('historial_medico')->nullable();
+            $table->text('alergias')->nullable();
+            $table->timestamps();
+            
+             $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
+             $table->foreign('psychologist_id')->references('id')->on('psychologists')->onDelete('set null');
         });
     }
 

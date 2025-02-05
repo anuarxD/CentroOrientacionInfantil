@@ -32,13 +32,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
         ];
     }
-
-    public function paciente()
-    {
-        return $this->state([
-            'role' => 'Paciente',
-        ]);
-    }
     
     /**
      * Indicate that the model's email address should be unverified.

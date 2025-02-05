@@ -36,11 +36,20 @@ class Patient extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['usuario_id', 'fecha_nacimiento', 'genero', 'direccion', 'telefono', 'tutor_nombre', 'tutor_relacion', 'tutor_telefono', 'historial_medico', 'alergias'];
+    protected $fillable = ['usuario_id','psychologist_id', 'fecha_nacimiento', 'genero', 'direccion', 'telefono', 'tutor_nombre', 'tutor_relacion', 'tutor_telefono', 'historial_medico', 'alergias'];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'usuario_id');
     }
+    public function psychologist()
+    {
+        return $this->belongsTo(Psychologist::class);
+    }
+    public function medicalRecords()
+{
+    return $this->hasMany(MedicalRecord::class);
+}
+
 
 }

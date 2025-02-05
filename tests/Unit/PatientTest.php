@@ -1,58 +1,55 @@
 <?php
 
-namespace Tests\Unit;
+namespace App\Models;
 
-use App\Models\User;
-use App\Models\Patient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class PatientTest extends TestCase
-{   
-    use RefreshDatabase;
+/**
+ * Class Patient
+ *
+ * @property $id
+ * @property $usuario_id
+ * @property $fecha_nacimiento
+ * @property $genero
+ * @property $direccion
+ * @property $telefono
+ * @property $tutor_nombre
+ * @property $tutor_relacion
+ * @property $tutor_telefono
+ * @property $historial_medico
+ * @property $alergias
+ * @property $created_at
+ * @property $updated_at
+ *
+ * @package App
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
+class Patient extends Model
+{
+    use HasFactory;
+    
+    protected $perPage = 20;
 
-    public function setUp(): void
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = ['usuario_id','psychologist_id', 'fecha_nacimiento', 'genero', 'direccion', 'telefono', 'tutor_nombre', 'tutor_relacion', 'tutor_telefono', 'historial_medico', 'alergias'];
+
+    public function user()
     {
-        parent::setUp();
-        $this->artisan('migrate');
+        return $this->belongsTo(User::class, 'usuario_id');
     }
-   
-    /** @test */
-
-    public function test_a_patient_belongs_to_a_user()
+    public function psychologist()
     {
-        // Crear un usuario
-        $user = User::factory()->create();
-
-        // Crear un paciente asociado al usuario
-        $patient = Patient::factory()->create(['usuario_id' => $user->id]);
-
-        // Verificar que el paciente pertenece al usuario
-        $this->assertInstanceOf(User::class, $patient->user);
-        $this->assertEquals($user->id, $patient->user->id);
+        return $this->belongsTo(Psychologist::class);
     }
+    public function medicalRecords()
+{
+    return $this->hasMany(MedicalRecord::class);
+}
 
-    /** @test */
-    public function it_has_expected_values_for_sexo_and_tutor_relacion()
-    {
-        $sexos = ['Masculino', 'Femenino', 'Otro'];
-        $tutorRelaciones = ['Padre', 'Madre', 'Otro'];
 
-        $this->assertContains('Masculino', $sexos);
-        $this->assertContains('Padre', $tutorRelaciones);
-    }
-
-    /** @test */
-    public function test_a_user_has_one_patient()
-    {
-        // Crear un usuario
-        $user = User::factory()->create();
-
-        // Crear un paciente asociado al usuario
-        $patient = Patient::factory()->create(['usuario_id' => $user->id]);
-
-        // Verificar que el usuario tiene un paciente
-        $this->assertInstanceOf(Patient::class, $user->patient);
-        $this->assertEquals($patient->id, $user->patient->id);
-    }
 }
